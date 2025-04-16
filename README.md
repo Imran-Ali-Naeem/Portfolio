@@ -79,5 +79,5 @@ cd Portfolio
 📍 Faisalabad, Pakistan
 📧 imranalinaeem3397@gmail.com
 📱 +92 3180743171
-🌐 Live Demo 🚀 (update link if needed)
+🌐 Live Demo 🚀 (https://imran-ali-naeem.github.io/Portfolio/)
 
