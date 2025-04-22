@@ -252,15 +252,16 @@ if (backtotop) {
   /**
    * Contact form handling
    */
-  const contactForm = document.getElementById('contactForm')
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault()
-      // Here you would typically send the form data to a server
-      alert('Form submitted! (This is a demo)')
-      this.reset()
-    })
-  }
+  // const contactForm = document.getElementById('contactForm');
+  // console.log("contactForm", contactForm);
+  // if (contactForm) {
+  //   contactForm.addEventListener('submit', function(e) {
+  //     e.preventDefault()
+  //     // Here you would typically send the form data to a server
+  //     alert('Form submitted! (This is a demo)')
+  //     this.reset()
+  //   })
+  // }
 
   /**
    * Initialize rotating text
@@ -312,48 +313,250 @@ if (backtotop) {
 
 
 
-document.getElementById("contact-Form").addEventListener("submit", function (e) {
-  e.preventDefault();
+// -------------------------------------------------------------------------------->
 
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const subject = document.getElementById("subject").value;
-  const message = document.getElementById("message").value;
+// document.addEventListener("DOMContentLoaded", function() {
+//   // Initialize modal with static backdrop
+//   const otpModal = new bootstrap.Modal(document.getElementById('otpModal'), {
+//     backdrop: 'static', // Prevents closing when clicking outside
+//     keyboard: false    // Prevents closing with ESC key
+//   });
+  
+//   // Get all elements
+//   const otpInput = document.getElementById('otpInput');
+//   const submitOtpBtn = document.getElementById('submitOtpBtn');
+//   const cancelOtpBtn = document.getElementById('cancelOtpBtn');
+//   const contactForm = document.getElementById("contactForm");
+//   const submitBtn = document.getElementById("submitBtn");
 
-  // Basic email validation
-  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  if (!isValidEmail) {
-      showMessage("❌ Invalid Email", "Please enter a valid email address.");
-      return;
+//   let generatedOtp = null;
+//   let formData = {};
+
+//   // Generate 6-digit OTP (keep your working version)
+//   function generateOtp() {
+//     return Math.floor(100000 + Math.random() * 900000);
+//   }
+
+//   // Send OTP function (modified for modal)
+//   async function sendOtp(userEmail) {
+//     try {
+//       // Validate email (keep your working validation)
+//       if (!userEmail || !userEmail.includes('@')) {
+//         alert("Please enter a valid email address");
+//         return false;
+//       }
+
+//       generatedOtp = generateOtp();
+//       console.log("Generated OTP:", generatedOtp);
+      
+//       // Keep your working EmailJS parameters
+//       await emailjs.send("service_r553eno", "template_ak7audh", {
+//         passcode: generatedOtp,
+//         email: userEmail
+//       });
+      
+//       // Show modal instead of old OTP section
+//       otpModal.show();
+//       submitBtn.disabled = true;
+//       otpInput.focus();
+//       return true;
+      
+//     } catch (error) {
+//       console.error("OTP send failed:", error);
+//       alert(`Failed to send OTP: ${error.text || 'Please check your email and try again'}`);
+//       return false;
+//     }
+//   }
+
+//   // OTP submission handler (keep your working logic)
+//   submitOtpBtn.addEventListener('click', async function() {
+//     const enteredOtp = otpInput.value.trim();
+    
+//     if (!enteredOtp) {
+//       alert("Please enter the OTP");
+//       return;
+//     }
+
+//     if (enteredOtp == generatedOtp) {
+//       try {
+//         await emailjs.send("service_r553eno", "template_2axpg6t", {
+//           from_name: formData.name,
+//           from_email: formData.email,
+//           subject: formData.subject,
+//           message: formData.message
+//         });
+        
+//         alert("✓ Message sent successfully!");
+//         contactForm.reset();
+//         otpModal.hide();
+//         submitBtn.disabled = false;
+//         generatedOtp = null;
+        
+//       } catch (error) {
+//         console.error("Message send failed:", error);
+//         alert("Failed to send message. Please try again.");
+//       }
+//     } else {
+//       alert("❌ Invalid OTP. Please check and try again.");
+//       otpInput.value = "";
+//       otpInput.focus();
+//     }
+//   });
+
+//   // Cancel button handler
+//   cancelOtpBtn.addEventListener('click', function() {
+//     otpModal.hide();
+//     submitBtn.disabled = false;
+//     generatedOtp = null;
+//     otpInput.value = "";
+//   });
+
+//   // Keep your working form submission handler
+//   contactForm.addEventListener("submit", async function(e) {
+//     e.preventDefault();
+//     e.stopPropagation();
+    
+//     formData = {
+//       name: document.getElementById("name").value,
+//       email: document.getElementById("email").value,
+//       subject: document.getElementById("subject").value,
+//       message: document.getElementById("message").value
+//     };
+    
+//     await sendOtp(formData.email);
+//   });
+// });
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("DOM fully loaded and script running");
+
+  // Initialize modal
+  const otpModalEl = document.getElementById('otpModal');
+  if (!otpModalEl) {
+    console.error("FATAL: OTP modal element not found!");
+    return;
+  }
+  
+  const otpModal = new bootstrap.Modal(otpModalEl, {
+    backdrop: 'static',
+    keyboard: false
+  });
+
+  // Get all elements
+  const elements = {
+    otpInput: document.getElementById('otpInput'),
+    submitOtpBtn: document.getElementById('submitOtpBtn'),
+    cancelOtpBtn: document.getElementById('cancelOtpBtn'),
+    contactForm: document.getElementById("contactForm"),
+    submitBtn: document.getElementById("submitBtn"),
+    nameInput: document.getElementById("name"),
+    emailInput: document.getElementById("email"),
+    subjectInput: document.getElementById("subject"),
+    messageInput: document.getElementById("message")
+  };
+
+  // Verify all elements exist
+  for (const [key, element] of Object.entries(elements)) {
+    if (!element) console.error(`Missing element: ${key}`);
+  }
+  if (Object.values(elements).some(el => !el)) return;
+
+  let generatedOtp = null;
+  let formData = {};
+
+  // 1. Cancel Button Handler - Fixed version
+  function handleCancel() {
+    console.log("Cancel button clicked");
+    otpModal.hide();
+    elements.submitBtn.disabled = false;
+    generatedOtp = null;
+    elements.otpInput.value = "";
   }
 
-  // Send email with EmailJS
-  emailjs.send("service_r553eno", "template_2axpg6t", {
-      name: name,
-      email: email,
-      subject: subject,
-      message: message
-  }).then(function () {
-      showMessage("✅ Message Sent", "Thank you! We'll get back to you soon.");
-      document.getElementById("contactForm").reset();
-  }, function (error) {
-      console.error(error);
-      showMessage("❌ Error", "Something went wrong. Please try again.");
+  // Attach event to both cancel buttons (modal footer and form)
+  const cancelButtons = document.querySelectorAll('#cancelOtpBtn, #otpModal .btn-secondary');
+  cancelButtons.forEach(btn => {
+    btn.addEventListener('click', handleCancel);
+  });
+
+  // Rest of your code remains the same...
+  function generateOtp() {
+    return Math.floor(100000 + Math.random() * 900000);
+  }
+
+  async function sendOtp(userEmail) {
+    try {
+      if (!userEmail || !userEmail.includes('@')) {
+        alert("Please enter a valid email address");
+        return false;
+      }
+
+      generatedOtp = generateOtp();
+      console.log("Generated OTP:", generatedOtp);
+      
+      await emailjs.send("service_r553eno", "template_ak7audh", {
+        passcode: generatedOtp,
+        email: userEmail
+      });
+      
+      otpModal.show();
+      elements.submitBtn.disabled = true;
+      elements.otpInput.focus();
+      return true;
+      
+    } catch (error) {
+      console.error("OTP send failed:", error);
+      alert(`Failed to send OTP: ${error.text || 'Please check your email and try again'}`);
+      return false;
+    }
+  }
+
+  elements.submitOtpBtn.addEventListener('click', async function() {
+    const enteredOtp = elements.otpInput.value.trim();
+    
+    if (!enteredOtp) {
+      alert("Please enter the OTP");
+      return;
+    }
+
+    if (enteredOtp == generatedOtp) {
+      try {
+        await emailjs.send("service_r553eno", "template_2axpg6t", {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        });
+        
+        alert("✓ Message sent successfully!");
+        elements.contactForm.reset();
+        otpModal.hide();
+        elements.submitBtn.disabled = false;
+        generatedOtp = null;
+        
+      } catch (error) {
+        console.error("Message send failed:", error);
+        alert("Failed to send message. Please try again.");
+      }
+    } else {
+      alert("❌ Invalid OTP. Please check and try again.");
+      elements.otpInput.value = "";
+      elements.otpInput.focus();
+    }
+  });
+
+  elements.contactForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    formData = {
+      name: elements.nameInput.value,
+      email: elements.emailInput.value,
+      subject: elements.subjectInput.value,
+      message: elements.messageInput.value
+    };
+    
+    console.log("Form submitted with data:", formData);
+    await sendOtp(formData.email);
   });
 });
-
-// Reusable popup box
-function showMessage(title, msg) {
-  const box = document.createElement("div");
-  box.innerHTML = `
-  <div style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-              background:white; padding:20px 30px; border-radius:10px; box-shadow:0 0 20px #0003; 
-              text-align:center; z-index:9999;">
-      <h3 style="margin-bottom:10px;">${title}</h3>
-      <p>${msg}</p>
-      <button onclick="this.parentElement.remove()" 
-              style="margin-top:15px; padding:5px 15px;">OK</button>
-  </div>
-  `;
-  document.body.appendChild(box);
-}

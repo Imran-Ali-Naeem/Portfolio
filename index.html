@@ -587,14 +587,49 @@
                                             <textarea id="message" class="form-control" rows="5" required></textarea>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary"><i
-                                                class="fas fa-paper-plane me-2"></i>Send Message</button>
+                                        <div id="otpSection" class="form-group" style="display: none;">
+                                            <label for="otp"><i class="fas fa-lock me-2"></i>Enter OTP</label>
+                                            <div class="input-group">
+                                                <input type="text" id="otp" class="form-control"
+                                                    placeholder="Check your email for OTP">
+                                                <button type="button" id="verifyOtpBtn"
+                                                    class="btn btn-outline-primary">Verify</button>
+                                                <button type="button" id="cancelOtpBtn"
+                                                    class="btn btn-outline-danger">Cancel</button>
+                                            </div>
+                                            <small class="text-muted">We sent a 6-digit code to your email.</small>
+                                        </div>
+
+                                        <button type="submit" id="submitBtn" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                                        </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+
+
+
+                <!-- OTP Modal -->
+                <div id="otpModal" class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Enter OTP</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>We've sent a 6-digit code to your email</p>
+                                <input type="text" id="otpInput" class="form-control" placeholder="Enter OTP">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="cancelOtpBtn" class="btn btn-secondary">Cancel</button>
+                                <button type="button" id="submitOtpBtn" class="btn btn-primary">Submit OTP</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Footer -->
                 <footer class="footer">
@@ -638,6 +673,7 @@
 
                 <!-- Back to Top Button -->
                 <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
 
                 <!-- Bootstrap JS Bundle with Popper -->
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

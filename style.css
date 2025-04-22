@@ -1372,3 +1372,182 @@ img, iframe, video, object, embed {
   word-break: break-word; /* Allows text to wrap */
   overflow-wrap: anywhere; /* Prevents overflow */
 }
+
+
+
+
+/*--------------------------------------------------------------
+# OTP message box
+--------------------------------------------------------------*/
+
+
+
+/* .modal {
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+#otpInput {
+  font-size: 1.2rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  padding: 10px;
+} */
+
+
+
+/* OTP Modal Styling */
+#otpModal .modal-content {
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-lg);
+  transition: var(--transition);
+}
+
+#otpModal .modal-header {
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem;
+}
+
+#otpModal .modal-title {
+  color: var(--text-color);
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#otpModal .modal-title i {
+  color: var(--primary-color);
+}
+
+#otpModal .modal-body {
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+#otpModal .modal-body p {
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+}
+
+#otpModal .modal-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* OTP Input Styling */
+#otpInput {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  transition: var(--transition);
+  outline: none;
+}
+
+#otpInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+}
+
+/* Button Styling */
+#submitOtpBtn {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+#submitOtpBtn:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+#cancelOtpBtn {
+  background-color: var(--bg-light);
+  border-color: var(--border-color);
+  color: var(--text-color);
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+#cancelOtpBtn:hover {
+  background-color: var(--bg-dark);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Backdrop Styling */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+/* Dark Mode Specific Adjustments */
+body.dark #otpModal .modal-content {
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.dark #otpInput {
+  background-color: var(--bg-dark);
+  border-color: var(--border-color);
+}
+
+body.dark #cancelOtpBtn {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+body.dark #cancelOtpBtn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 575.98px) {
+  #otpModal .modal-dialog {
+    margin: 1rem;
+  }
+  
+  #otpInput {
+    font-size: 1.2rem;
+    padding: 0.75rem;
+    letter-spacing: 0.3rem;
+  }
+  
+  #otpModal .modal-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  #submitOtpBtn, #cancelOtpBtn {
+    width: 100%;
+  }
+}
+
+
+#cancelOtpBtn {
+  background-color: red !important;
+  color: white !important;
+}
+#otpModal {
+  z-index: 9999 !important;
+}
